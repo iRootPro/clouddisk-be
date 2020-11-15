@@ -4,7 +4,9 @@ const bcrypt = require("bcryptjs")
 const jsonwebtoken = require("jsonwebtoken")
 const {check, validationResult} = require("express-validator")
 const User = require("./../models/User")
+const authMiddleWare = require("./../middlewares/auth")
 const router = Router()
+
 
 const secretKey = config.get('secretKey')
 
@@ -48,6 +50,26 @@ router.post('/login', async (req, res) => {
         if (!isPassValid) {
             return res.status(400).json({message: 'Invalid password'})
         }
+        const token = jsonwebtoken.sign({id: user.id}, secretKey, {expiresIn: '1h'})
+        return res.json({
+            token,
+            user: {
+                id: user.id,
+                email: user.email,
+                diskSpace: user.diskSpace,
+                usedSpace: user.usedSpace,
+                avatar: user.avatar
+            }
+        })
+    } catch (e) {
+        console.error(e)
+        return res.send({message: "Server error"})
+    }
+})
+
+router.get('/auth', authMiddleWare,async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.user.id})
         const token = jsonwebtoken.sign({id: user.id}, secretKey, {expiresIn: '1h'})
         return res.json({
             token,
