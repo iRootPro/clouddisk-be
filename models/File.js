@@ -1,11 +1,13 @@
 const {Schema, model, ObjectId} = require("mongoose")
 
 const File = new Schema({
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    diskSpace: {type: Number, default: 1024**3*10},
-    usedSpace: {type: Number, default: 0},
-    avatar: String,
+    name: {type: String, required: true},
+    type: {type: String, required: true},
+    accessLink: {type: String},
+    size: {type: Number, default: 0},
+    path: {type: String, default: ''},
+    user: {type: ObjectId, ref: 'User'},
+    parent: {type: ObjectId, ref: 'File'},
     files: [{type: ObjectId, ref: 'File'}]
 
 })
