@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]
         if (!token) {
-            return res.status(400).json({
+            return res.status(401).json({
                 message: 'Auth error'
             })
         }
@@ -18,6 +18,6 @@ module.exports = (req, res, next) => {
         req.user = decode
         next()
     } catch (e) {
-        return res.json({message: 'Auth error'})
+        return res.status(401).json({message: 'Auth error'})
     }
 }
