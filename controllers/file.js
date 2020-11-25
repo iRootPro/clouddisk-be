@@ -67,8 +67,8 @@ class FileController {
                 name: file.name,
                 size: file.size,
                 type,
-                parent: parent ? parent._id: null,
-                path: parent? parent.path: null,
+                parent: parent ? parent._id : null,
+                path: parent ? parent.path : null,
                 user: user._id
             })
             await dbFile.save()
@@ -79,6 +79,24 @@ class FileController {
             return res.status(400).json({message: 'Upload error'})
         }
     }
+
+    async downloadFile(req, res) {
+        try {
+            const file = File.findOne({_id: req.query.id, user: req.user.id})
+            const path = config.get('filesPath') + '/' + req.user.id + '/' + file.name
+            if (path) {
+                return res.download(path, file.name)
+            }
+            else {
+                return res.status(404).json({message: 'File not found'})
+            }
+        }
+
+    catch(e) {
+        console.log(e)
+        res.status(500).json({message: 'Download error'})
+    }
+}
 }
 
 module.exports = new FileController()
