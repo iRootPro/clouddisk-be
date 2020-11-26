@@ -82,21 +82,18 @@ class FileController {
 
     async downloadFile(req, res) {
         try {
-            const file = File.findOne({_id: req.query.id, user: req.user.id})
+            const file = await File.findOne({_id: req.query.id, user: req.user.id})
             const path = config.get('filesPath') + '/' + req.user.id + '/' + file.name
             if (path) {
                 return res.download(path, file.name)
-            }
-            else {
+            } else {
                 return res.status(404).json({message: 'File not found'})
             }
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({message: 'Download error'})
         }
-
-    catch(e) {
-        console.log(e)
-        res.status(500).json({message: 'Download error'})
     }
-}
 }
 
 module.exports = new FileController()
