@@ -39,8 +39,8 @@ class FileController {
                 case 'date':
                     files = await File.find({user: req.user.id, parent: req.query.parent}).sort({date: 1})
                     break
-                case 'size':
-                    files = await File.find({user: req.user.id, parent: req.query.parent}).sort({size: 1})
+                case 'type':
+                    files = await File.find({user: req.user.id, parent: req.query.parent}).sort({type: 1})
                     break
                 default:
                     files = await File.find({user: req.user.id, parent: req.query.parent})
