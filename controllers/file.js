@@ -128,7 +128,7 @@ class FileController {
     }
     async searchFile(req, res) {
         try {
-            let files = File.find({user: req.user.id})
+            let files = await File.find({user: req.user.id})
             files = files.filter(file => file.name.includes(req.query.search))
             return res.status(200).json(files)
         }
