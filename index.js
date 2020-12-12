@@ -11,6 +11,7 @@ const PORT = config.get("serverPort")
 const dbUrl = config.get("dbUrl")
 
 app.use(express.json())
+app.use(express.static('static'))
 app.use(fileUpload({}))
 app.use(cors)
 app.use('/api/auth', authRouter)

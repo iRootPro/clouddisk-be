@@ -8,13 +8,15 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "@types/uuid": "^8.3.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
     "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.13"
+    "mongoose": "^5.10.13",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
