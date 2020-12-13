@@ -163,7 +163,7 @@ class FileController {
             return res.status(200).json(user)
         } catch (e) {
             console.log(e)
-            req.status(400).json({message: "Delete avatar error"})
+            res.status(400).json({message: "Delete avatar error"})
         }
     }
 
